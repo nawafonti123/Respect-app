@@ -242,7 +242,8 @@ class _RespectPaintersScreenState extends State<RespectPaintersScreen> {
       _showAlreadySubmittedMessage(user);
       return;
     }
-    if (_selectedImage == null) {
+    final selectedImage = _selectedImage;
+    if (selectedImage == null) {
       NotificationService.showTopNotification('اختر صورة الرسمة أولاً');
       return;
     }
@@ -268,7 +269,7 @@ class _RespectPaintersScreenState extends State<RespectPaintersScreen> {
         avatarUrl: avatar,
         title: title,
         description: _descriptionController.text.trim(),
-        imagePath: _selectedImage!.path,
+        imagePath: selectedImage.path,
         weekKey: _weekKey,
       );
 

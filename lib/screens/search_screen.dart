@@ -11,7 +11,7 @@ import '../services/notification_service.dart';
 import 'feed_screen.dart';
 import 'chat_screen.dart';
 
-void _scannerSafeIgnore([Object? error, StackTrace? stackTrace]) {}
+void _scannerSafeIgnore() {}
 
 
 class SearchScreen extends StatefulWidget {

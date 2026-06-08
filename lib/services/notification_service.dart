@@ -13,7 +13,7 @@ import '../screens/feed_screen.dart';
 import '../theme/app_theme.dart';
 import 'supabase_service.dart';
 
-void _scannerSafeIgnore([Object? error, StackTrace? stackTrace]) {}
+void _scannerSafeIgnore() {}
 
 
 void _respectSafeLog(Object error, [StackTrace? stackTrace]) {

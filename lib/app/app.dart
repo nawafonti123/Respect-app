@@ -1,5 +1,6 @@
 // ignore_for_file: deprecated_member_use, unused_element, unused_field, unused_import, unused_element_parameter, prefer_const_constructors, prefer_const_declarations, use_build_context_synchronously, unnecessary_this, unnecessary_brace_in_string_interps, curly_braces_in_flow_control_structures, prefer_final_fields, unnecessary_type_check, unnecessary_non_null_assertion
 import 'dart:async';
+import 'dart:developer' as developer;
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -20,8 +21,7 @@ import 'theme_provider.dart';
 
 void _respectSafeLog(Object error, [StackTrace? stackTrace]) {
   if (kDebugMode) {
-    debugPrint('Respect safe catch: $error');
-    if (stackTrace != null) debugPrintStack(stackTrace: stackTrace);
+    developer.log('Respect safe catch', error: error, stackTrace: stackTrace, name: 'respect.safe');
   }
 }
 

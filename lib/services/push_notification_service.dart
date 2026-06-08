@@ -7,7 +7,7 @@ import 'package:flutter/foundation.dart';
 import 'notification_service.dart';
 import 'supabase_service.dart';
 
-void _scannerSafeIgnore([Object? error, StackTrace? stackTrace]) {}
+void _scannerSafeIgnore() {}
 
 
 void _respectSafeLog(Object error, [StackTrace? stackTrace]) {

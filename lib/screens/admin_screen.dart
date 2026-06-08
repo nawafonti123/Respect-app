@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
+import 'dart:developer' as developer;
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -12,8 +13,7 @@ import '../services/supabase_service.dart';
 
 void _respectSafeLog(Object error, [StackTrace? stackTrace]) {
   if (kDebugMode) {
-    debugPrint('Respect safe catch: $error');
-    if (stackTrace != null) debugPrintStack(stackTrace: stackTrace);
+    developer.log('Respect safe catch', error: error, stackTrace: stackTrace, name: 'respect.safe');
   }
 }
 

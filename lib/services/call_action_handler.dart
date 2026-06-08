@@ -1,4 +1,3 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -7,7 +6,7 @@ import 'call_service.dart';
 import 'supabase_service.dart';
 import 'notification_service.dart';
 
-void _scannerSafeIgnore([Object? error, StackTrace? stackTrace]) {}
+void _scannerSafeIgnore() {}
 
 
 class CallActionHandler {

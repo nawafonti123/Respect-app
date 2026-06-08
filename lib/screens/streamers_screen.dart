@@ -13,7 +13,7 @@ import 'package:webview_flutter/webview_flutter.dart';
 import '../theme/app_theme.dart';
 import '../widgets/glass_card.dart';
 
-void _scannerSafeIgnore([Object? error, StackTrace? stackTrace]) {}
+void _scannerSafeIgnore() {}
 
 
 void _respectSafeLog(Object error, [StackTrace? stackTrace]) {

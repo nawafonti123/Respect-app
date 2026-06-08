@@ -2,14 +2,13 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 import 'dart:math';
-import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http; // تمت الإضافة
 
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
-void _scannerSafeIgnore([Object? error, StackTrace? stackTrace]) {}
+void _scannerSafeIgnore() {}
 
 
 void _logIgnoredError(Object error, StackTrace stackTrace) {
@@ -31,7 +30,13 @@ class SupabaseService {
   SupabaseService._();
 
   static const String supabaseUrl = 'https://oafbzceorbjykgoffuaa.supabase.co';
-  static const String supabaseAnonToken = String.fromEnvironment('RESPECT_SUPABASE_ANON_TOKEN');
+  static String get requiredSupabaseAnonToken {
+    const value = String.fromEnvironment('RESPECT_SUPABASE_ANON_KEY');
+    if (value.trim().isEmpty) {
+      throw StateError('Missing required dart-define: RESPECT_SUPABASE_ANON_KEY');
+    }
+    return value;
+  }
 
   static SupabaseClient get client => Supabase.instance.client;
 
@@ -1109,6 +1114,7 @@ class SupabaseService {
     };
   }
 
+  // ignore: unused_element
   static Future<void> _enforceRespectContentModeration({
     required String text,
     required String authorUsername,
@@ -1525,6 +1531,7 @@ class SupabaseService {
     return aiReply;
   }
 
+  // ignore: unused_element
   static String _dailyRespectAiModeForNow() {
     final day = DateTime.now().toUtc().day;
     if (day % 3 == 0) return 'daily_poll';
@@ -1536,7 +1543,7 @@ class SupabaseService {
     final now = DateTime.now();
     final mm = now.month.toString().padLeft(2, '0');
     final dd = now.day.toString().padLeft(2, '0');
-    return 'respect_ai_daily_post_${now.year}_${mm}_${dd}';
+    return 'respect_ai_daily_post_${now.year}_${mm}_$dd';
   }
 
   static String _normalizeDailyQuestionText(String value) {
@@ -1616,7 +1623,6 @@ class SupabaseService {
           .timeout(const Duration(seconds: 8));
 
       for (final raw in postRows) {
-        if (raw is! Map) continue;
         final user = displayUsername((raw['username'] ?? '').toString());
         if (isRespectAiUsername(user)) continue;
         addCandidate(user: user, text: (raw['text'] ?? '').toString(), source: 'post');
@@ -1632,7 +1638,6 @@ class SupabaseService {
           .timeout(const Duration(seconds: 8));
 
       for (final raw in replyRows) {
-        if (raw is! Map) continue;
         final user = displayUsername((raw['author_username'] ?? raw['username'] ?? '').toString());
         if (isRespectAiUsername(user)) continue;
         addCandidate(user: user, text: (raw['text'] ?? '').toString(), source: 'reply');
@@ -3023,7 +3028,6 @@ $examples
     await enforceCurrentDeviceAllowed();
 
     final clean = strictUsername(username);
-    final display = '@$clean'; // للعرض المحلي فقط
     final cleanEmail = normalizeEmail(email);
     final cleanName = cleanProfileName(name);
     final pass = password.trim();
@@ -4555,7 +4559,7 @@ $examples
   static String _cleanHashtagToken(String value) {
     var v = value.trim();
     if (v.startsWith('#')) v = v.substring(1);
-    while (v.isNotEmpty && RegExp(r'[\.,،؛:!\؟\)\]\}\(\[\{"' + "'" + r']$').hasMatch(v)) {
+    while (v.isNotEmpty && RegExp(r'''[\.,،؛:!\؟\)\]\}\(\[\{"']$''').hasMatch(v)) {
       v = v.substring(0, v.length - 1);
     }
     v = v.replaceAll(RegExp(r'\s+'), '_');

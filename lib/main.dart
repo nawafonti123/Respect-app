@@ -12,15 +12,13 @@ import 'services/notification_service.dart';
 import 'services/push_notification_service.dart';
 import 'firebase_options.dart';
 
-void _scannerSafeIgnore([Object? error, StackTrace? stackTrace]) {}
-
-
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
+  final supabaseAnonToken = SupabaseService.requiredSupabaseAnonToken;
   await Supabase.initialize(
     url: SupabaseService.supabaseUrl,
-    anonKey: SupabaseService.supabaseAnonToken,
+    anonKey: supabaseAnonToken,
   );
 
   await Firebase.initializeApp(

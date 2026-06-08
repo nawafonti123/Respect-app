@@ -1,6 +1,7 @@
 // ignore_for_file: deprecated_member_use, unused_element, unused_field, unused_import, unused_local_variable, unused_element_parameter, prefer_const_constructors, prefer_const_declarations, prefer_const_literals_to_create_immutables, curly_braces_in_flow_control_structures, sized_box_for_whitespace, dead_code, unnecessary_type_check, unnecessary_non_null_assertion, use_build_context_synchronously, unnecessary_brace_in_string_interps, prefer_final_fields
 // respect_live_screen.dart
 import 'dart:async';
+import 'dart:developer' as developer;
 import 'dart:io';
 import 'dart:math';
 
@@ -16,7 +17,7 @@ import '../widgets/glass_card.dart';
 
 void _logIgnoredError(Object error, StackTrace stackTrace) {
   assert(() {
-    debugPrint('Ignored recoverable error: $error');
+    developer.log('Ignored recoverable error', error: error, stackTrace: stackTrace, name: 'respect.recoverable');
     return true;
   }());
 }

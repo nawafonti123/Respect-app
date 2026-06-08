@@ -5,6 +5,18 @@ import 'package:flutter/foundation.dart' as foundation;
 
 /// Default [FirebaseOptions] for use with your Firebase apps.
 class DefaultFirebaseOptions {
+  static String _requiredEnv(String name) {
+    const values = <String, String>{
+      'FIREBASE_WEB_API_KEY': String.fromEnvironment('FIREBASE_WEB_API_KEY'),
+      'FIREBASE_ANDROID_API_KEY': String.fromEnvironment('FIREBASE_ANDROID_API_KEY'),
+    };
+    final value = values[name] ?? '';
+    if (value.trim().isEmpty) {
+      throw StateError('Missing required dart-define: $name');
+    }
+    return value;
+  }
+
   static FirebaseOptions get currentPlatform {
     if (foundation.kIsWeb) {
       return web;
@@ -39,8 +51,8 @@ class DefaultFirebaseOptions {
     }
   }
 
-  static const FirebaseOptions web = FirebaseOptions(
-    apiKey: String.fromEnvironment('FIREBASE_WEB_TOKEN'),
+  static final FirebaseOptions web = FirebaseOptions(
+    apiKey: _requiredEnv('FIREBASE_WEB_API_KEY'),
     appId: '1:384970345898:web:bc23c9dd6245e603f46fd3',
     messagingSenderId: '384970345898',
     projectId: 'respect-app-dbc77',
@@ -49,8 +61,8 @@ class DefaultFirebaseOptions {
     measurementId: 'G-DY7T4DTGG3',
   );
 
-  static const FirebaseOptions android = FirebaseOptions(
-    apiKey: String.fromEnvironment('FIREBASE_ANDROID_TOKEN'),
+  static final FirebaseOptions android = FirebaseOptions(
+    apiKey: _requiredEnv('FIREBASE_ANDROID_API_KEY'),
     appId: '1:384970345898:android:05bc6f2383c6a818f46fd3',
     messagingSenderId: '384970345898',
     projectId: 'respect-app-dbc77',
